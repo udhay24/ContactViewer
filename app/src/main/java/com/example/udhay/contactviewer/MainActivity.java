@@ -20,6 +20,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -128,16 +130,36 @@ Log.v("loader finished" , "inside loader finished");
                     Intent whatsAppIntent = new Intent(Intent.ACTION_VIEW);
                     whatsAppIntent.setType("text/plain");
                     whatsAppIntent.setData(Uri.parse("https://api.whatsapp.com/send?phone="+number));
+                    whatsAppIntent.setPackage("com.whatsapp");
                     try {
-                        whatsAppIntent.setPackage("com.whatsapp");
+                        startActivity(whatsAppIntent);
                     }catch(Exception ex){
                         Toast.makeText(MainActivity.this , "Whats app is not installed" , Toast.LENGTH_SHORT).show();
                     }
-                    startActivity(whatsAppIntent);
+
                 }
             }
         }).attachToRecyclerView(contactRecyclerView);
 
         Toast.makeText(this, "swipe left to call ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_menu , menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()){
+            case R.id.detailWhatsApp:
+                startActivity(new Intent(this , whatsAppDirect.class ));
+                return true;
+            default:
+                return false;
+        }
+
     }
 }
