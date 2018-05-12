@@ -1,16 +1,12 @@
 package com.example.udhay.contactviewer;
 
 import android.Manifest;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +25,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.udhay.contactviewer.Activities.DetailContactActivity;
+import com.example.udhay.contactviewer.Activities.whatsAppDirect;
+import com.example.udhay.contactviewer.BackgroundTasks.ContactAsyncTask;
+import com.example.udhay.contactviewer.BackgroundTasks.ContactsReload;
 import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 import com.example.udhay.contactviewer.contact_database.ContactsContract;
 
@@ -190,10 +190,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+
+    //This method will prepare the custom databasse.
+    // This method should be called during the first run  and can be called by the user to update the database
+
+
     public void refresh() {
 
         ContactsReload refresh = new ContactsReload(this);
-        refresh.execute(contactCursor);
+        //The input cursor is the one obtained by querying the android Database .
+//        It contains all name and numbers of all the records
+
+        refresh.execute();
     }
 
     @Override

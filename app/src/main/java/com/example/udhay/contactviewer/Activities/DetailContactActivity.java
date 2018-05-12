@@ -1,4 +1,4 @@
-package com.example.udhay.contactviewer;
+package com.example.udhay.contactviewer.Activities;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.udhay.contactviewer.MainActivity;
+import com.example.udhay.contactviewer.R;
 import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 
 public class DetailContactActivity extends AppCompatActivity {
