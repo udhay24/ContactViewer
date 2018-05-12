@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.example.udhay.contactviewer.R;
 import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 
 public class DetailContactActivity extends AppCompatActivity {
+    public static final Uri contactUri = android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
     static String name;
     RecyclerView mRecyclerView;
     @Override
@@ -33,7 +35,7 @@ public class DetailContactActivity extends AppCompatActivity {
         name =startIntent.getStringExtra("name");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Cursor cursor = getContentResolver().query(MainActivity.contactUri , new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER} ,
+        Cursor cursor = getContentResolver().query(contactUri , new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER} ,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"=?" , new String[]{name} ,
                 null);
         Toast.makeText(this , "got the number  :" + cursor.getCount() , Toast.LENGTH_LONG).show();

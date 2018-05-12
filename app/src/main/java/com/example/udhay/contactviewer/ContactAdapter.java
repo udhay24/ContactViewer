@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.udhay.contactviewer.contact_database.ContactsContract;
 
+/*This is the adapter class for the RecyclerView in the MainActivity
+* It loads the contact name and number in the Main Activity*/
+
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactViewHolder> {
 
     private Cursor contactCursor;

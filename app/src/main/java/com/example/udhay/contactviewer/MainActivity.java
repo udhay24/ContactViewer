@@ -33,14 +33,14 @@ import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 import com.example.udhay.contactviewer.contact_database.ContactsContract;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
-    public static final Uri contactUri = android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+
     public static Cursor contactCursor;
     private static final int LOADER_ID = 100;
     public static RecyclerView contactRecyclerView;
     public static ContactAdapter contactAdapter;
     public static int launch = 0;
 
-    // Request code for READ_CONTACTS. It can be any number > 0.
+    // Request code for READ_CONTACTS.
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
 
     @Override
@@ -55,15 +55,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 // This one checks for the permission and loads the data
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-            PackageManager manager = getPackageManager();
-            int hasPermission = manager.checkPermission("android.permission.READ_CONTACTS", "com.example.udhay.contactviewer");
-            if (hasPermission == manager.PERMISSION_GRANTED) {
-                loadContact();
-            }
-        } else {
+        }else {
+
+            //since the permission is granted load the contacts
             loadContact();
         }
+
 
         //This Statement is used to check for first run
         final String PREFS_NAME = "MyPrefsFile";
@@ -85,7 +82,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-/**
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode){
+            case PERMISSIONS_REQUEST_READ_CONTACTS:{
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //Since the permission is granted load all the contacts
+                    loadContact();
+                }
+                else {
+                    Toast.makeText(this , "please provide the permission" , Toast.LENGTH_SHORT);
+                }
+            }
+        }
+    }
+
+    /**
 * @return The cursor contains the query from the custom database with the names in the ascending order
 * */
     @NonNull
@@ -107,38 +121,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //WhHY THE HELL DO I NEED TO CALL REFRESH!!
         refresh();
 
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    //this method is used to check the country code
-    private String prepareNumber(String number) {
-        if (number.charAt(0) == '+') {
-            return number;
-        } else {
-            return ("+91" + number);
-        }
-    }
-
-    private void loadContact() {
-        LoaderManager manager = getSupportLoaderManager();
-        Loader<Cursor> loader = manager.getLoader(LOADER_ID);
-        if (loader == null) {
-            manager.initLoader(LOADER_ID, null, this).forceLoad();
-        } else {
-            manager.restartLoader(LOADER_ID, null, this).forceLoad();
-        }
-
-
+        // Set the itemOpenHelper to the recycler View
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -170,7 +153,38 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         }).attachToRecyclerView(contactRecyclerView);
 
-        Toast.makeText(this, "swipe left to call ", Toast.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    //this method is used to check the country code
+    private String prepareNumber(String number) {
+        if (number.charAt(0) == '+') {
+            return number;
+        } else {
+            return ("+91" + number);
+        }
+    }
+
+    //This method calls the loaderManager function
+    private void loadContact() {
+        LoaderManager manager = getSupportLoaderManager();
+        Loader<Cursor> loader = manager.getLoader(LOADER_ID);
+        if (loader == null) {
+            manager.initLoader(LOADER_ID, null, this).forceLoad();
+        } else {
+            manager.restartLoader(LOADER_ID, null, this).forceLoad();
+        }
+
     }
 
     @Override
