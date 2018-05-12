@@ -49,8 +49,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         contactRecyclerView = findViewById(R.id.contact_recycle);
         contactRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        contactRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        contactRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-
+// This one checks for the permission and loads the data
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             loadContact();
         }
 
+        //This Statement is used to check for first run
         final String PREFS_NAME = "MyPrefsFile";
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -78,29 +81,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             settings.edit().putBoolean("my_first_time", false).commit();
         }
 
+
+
     }
 
+/**
+* @return The cursor contains the query from the custom database with the names in the ascending order
+* */
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        Log.v("loader Creation", "Loader is Created");
-        return new ContactAsyncTask(this, contactUri);
+        return new ContactAsyncTask(this);
 
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
 
-        Log.v("loader finished", "inside loader finished");
         contactCursor = data;
 
         contactAdapter = new ContactAdapter(data);
-        contactRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        contactRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         contactRecyclerView.setAdapter(contactAdapter);
 
+        //WhHY THE HELL DO I NEED TO CALL REFRESH!!
         refresh();
-        Log.v("display", Integer.toString(contactCursor.getCount()));
 
 
     }

@@ -2,24 +2,40 @@ package com.example.udhay.contactviewer.BackgroundTasks;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.udhay.contactviewer.contact_database.ContactsContract;
+
+import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 
 public class ContactAsyncTask extends android.support.v4.content.AsyncTaskLoader<Cursor>{
-   private static Uri contactUri ;
    private final Context context;
 
-    public ContactAsyncTask(Context context , Uri... uri) {
+    public ContactAsyncTask(Context context ) {
         super(context);
         this.context = context;
-        contactUri = uri[0];
+
 
     }
 
     @Override
     public Cursor loadInBackground() {
 
-        return context.getContentResolver().query(contactUri , null , null , null ,ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
-        }
+        ContactOpenHelper openHelper = new ContactOpenHelper(context);
+
+        SQLiteDatabase database = openHelper.getReadableDatabase();
+
+        return database.query(ContactsContract.Contacts.TABLE_NAME ,
+                //Query both the contact name and number
+                new String[]{ContactsContract.Contacts.COLUMN_NAME , ContactsContract.Contacts.DEFAULT_NUMBER} ,
+                null ,
+                null ,
+                null ,
+                null,
+                //Query the contact name is asending order for display
+                ContactsContract.Contacts.COLUMN_NAME + " ASC "
+                );
+
+    }
 }
 
