@@ -18,6 +18,7 @@ public class ContactAsyncTask extends android.support.v4.content.AsyncTaskLoader
 
     @Override
     public Cursor loadInBackground() {
+
         return context.getContentResolver().query(contactUri , null , null , null ,ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
         }
 }

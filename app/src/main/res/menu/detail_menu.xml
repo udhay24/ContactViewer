@@ -8,4 +8,9 @@
         android:visible="true"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/refresh"
+        android:title="refresh"
+        android:visible="true"
+        app:showAsAction="never"/>
 </menu>

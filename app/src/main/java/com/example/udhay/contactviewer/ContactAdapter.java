@@ -19,6 +19,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactV
     @Override
     public contactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact , parent  ,false);
+        view.setOnClickListener(new ContactClickListener());
         return new contactViewHolder(view);
     }
 
@@ -27,14 +28,15 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactV
 
         try {
             if (contactCursor.moveToPosition(position)) {
-                holder.contactName.setText(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
-                holder.contactNumber.setText(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                holder.lineView.setVisibility(View.VISIBLE);
+                holder.contactName.setText(contactCursor.getString((contactCursor.getColumnIndex(com.example.udhay.contactviewer.contact_database.ContactsContract.Contacts.COLUMN_NAME))));
+                holder.contactNumber.setText(contactCursor.getString((contactCursor.getColumnIndex(com.example.udhay.contactviewer.contact_database.ContactsContract.Contacts.DEFAULT_NUMBER))));
+
             }
         }
         catch (Exception ex){
             holder.contactNumber.setText("No number");
         }
+
 
     }
 
@@ -46,12 +48,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactV
     public class contactViewHolder extends RecyclerView.ViewHolder {
         private TextView contactName;
         private TextView contactNumber;
-        private View lineView;
         public contactViewHolder(View view){
             super(view);
             contactName = view.findViewById(R.id.contact_name);
             contactNumber = view.findViewById(R.id.contact_number);
-            lineView = view.findViewById(R.id.view);
+
         }
 
         public String getContactNumber() {
@@ -61,6 +62,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactV
         public String getContactName() {
             return contactName.getText().toString();
         }
+
+
+    }
+
+    public void swapCursor(Cursor cursor){
+        contactCursor = cursor;
     }
 }
 
