@@ -94,9 +94,6 @@ public class ContactsReload extends AsyncTask<Void , Integer , Cursor> {
         MainActivity.contactAdapter.swapCursor(cursor);
         MainActivity.contactAdapter.notifyDataSetChanged();
 
-
-
-        //Remove this Toast after debugging
         Toast.makeText(mContext , "Contacts present" + cursor.getCount() , Toast.LENGTH_SHORT).show();
     }
 

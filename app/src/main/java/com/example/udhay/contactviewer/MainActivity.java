@@ -158,10 +158,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 
     //this method is used to check the country code
     private String prepareNumber(String number) {
@@ -226,6 +223,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         launch++;
     }
 }
+
+//This listener will help to open the appropriate detail activity
+
     class ContactClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {

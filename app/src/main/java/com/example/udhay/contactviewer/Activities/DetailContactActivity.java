@@ -24,6 +24,7 @@ import com.example.udhay.contactviewer.R;
 import com.example.udhay.contactviewer.contact_database.ContactOpenHelper;
 
 public class DetailContactActivity extends AppCompatActivity {
+    //This uri points to the android contact database
     public static final Uri contactUri = android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
     static String name;
     RecyclerView mRecyclerView;
@@ -38,7 +39,8 @@ public class DetailContactActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(contactUri , new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER} ,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+"=?" , new String[]{name} ,
                 null);
-        Toast.makeText(this , "got the number  :" + cursor.getCount() , Toast.LENGTH_LONG).show();
+
+
         mRecyclerView = findViewById(R.id.contact_numbers);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -87,6 +89,7 @@ class customAdapter extends RecyclerView.Adapter<customAdapter.NumberViewHolder>
             public boolean onLongClick(View v) {
                 String contactNumber = temoHolder.getNumber().getText().toString();
                 setDefaultNumber(DetailContactActivity.name , contactNumber);
+                MainActivity.contactAdapter.notifyDataSetChanged();
                 return true;
             }
         });
