@@ -38,7 +38,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 100;
     public static RecyclerView contactRecyclerView;
     public static ContactAdapter contactAdapter;
+
+//    TODO(4) change this to a boolean flag
+
     public static int launch = 0;
+
+    //This Statement is used to check for first run
+    public static final String PREFS_NAME = "MyPrefsFile";
+
+
 
     // Request code for READ_CONTACTS.
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
@@ -62,21 +70,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
 
-        //This Statement is used to check for first run
-        final String PREFS_NAME = "MyPrefsFile";
 
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
-        if (settings.getBoolean("my_first_time", true)) {
-            //the app is being launched for first time, do something
-            Log.d("Comments", "First time");
 
-            launch ++;
-            // first time task
-
-            // record the fact that the app has been started at least once
-            settings.edit().putBoolean("my_first_time", false).commit();
-        }
 
 
 
@@ -89,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         switch(requestCode){
             case PERMISSIONS_REQUEST_READ_CONTACTS:{
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
                     //Since the permission is granted load all the contacts
                     loadContact();
                 }
