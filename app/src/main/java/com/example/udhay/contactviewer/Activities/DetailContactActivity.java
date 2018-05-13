@@ -32,6 +32,9 @@ public class DetailContactActivity extends AppCompatActivity {
     //Contact name
     static String name;
 
+    //Contact position
+    static int position;
+
     //Recycler view for the current detail screen
     RecyclerView mRecyclerView;
 
@@ -43,6 +46,7 @@ public class DetailContactActivity extends AppCompatActivity {
         //get the name of the contact to be displayed
         Intent startIntent = getIntent();
         name =startIntent.getStringExtra("name");
+        position = startIntent.getIntExtra("position" , 0);
 
 setTitle(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,7 +79,9 @@ setTitle(name);
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.home:
+
                 this.finish();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -106,7 +112,7 @@ class customAdapter extends RecyclerView.Adapter<customAdapter.NumberViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NumberViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NumberViewHolder holder, final int position) {
         mCursor.moveToPosition(position);
         holder.getNumber().setText(mCursor.getString(mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
         final NumberViewHolder temoHolder = holder;
@@ -115,7 +121,8 @@ class customAdapter extends RecyclerView.Adapter<customAdapter.NumberViewHolder>
             public boolean onLongClick(View v) {
                 String contactNumber = temoHolder.getNumber().getText().toString();
                 setDefaultNumber(DetailContactActivity.name , contactNumber);
-                MainActivity.contactAdapter.notifyDataSetChanged();
+                MainActivity.contactAdapter.notifyItemChanged(position);
+
                 return true;
             }
         });
