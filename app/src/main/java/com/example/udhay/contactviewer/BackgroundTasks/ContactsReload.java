@@ -20,12 +20,14 @@ public class ContactsReload extends AsyncTask<Void , Integer , Cursor> {
     //This uri is used to query the android database
     public static final Uri contactUri = android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
 
+    boolean loadingFirstTime;
 
 
     Context mContext;
     //Public constructor takes in a context
-    public ContactsReload(Context context){
+    public ContactsReload(Context context , boolean firstTime){
         mContext = context;
+        loadingFirstTime = firstTime;
     }
 
 
@@ -62,7 +64,7 @@ public class ContactsReload extends AsyncTask<Void , Integer , Cursor> {
 //            TODO(1) fix the first run of the app . Because it is freaking Weird
 
 
-            if(MainActivity.launch<=2) {
+            if(loadingFirstTime) {
                 contactValue.put(ContactsContract.Contacts.DEFAULT_NUMBER, number);
                 //Update the default Number of the contact
                 database.update(ContactsContract.Contacts.TABLE_NAME, contactValue, ContactsContract.Contacts.COLUMN_NAME + " =? ",

@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static RecyclerView contactRecyclerView;
     public static ContactAdapter contactAdapter;
 
-//    TODO(4) change this to a boolean flag
 
-    public static int launch = 0;
 
     //This Statement is used to check for first run
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -210,18 +208,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void refresh() {
 
-        ContactsReload refresh = new ContactsReload(this);
+        ContactsReload refresh = new ContactsReload(this , false);
         //The input cursor is the one obtained by querying the android Database .
 //        It contains all name and numbers of all the records
 
         refresh.execute();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        launch++;
-    }
 }
 
 //This listener will help to open the appropriate detail activity
@@ -240,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             Intent intent = new Intent(v.getContext() , DetailContactActivity.class);
             intent.putExtra("name" , name);
+            intent.putExtra("position" , position-1);
             v.getContext().startActivity(intent);
         }
     }
