@@ -4,18 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/single_number"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="70dp">
 
     <TextView
         android:id="@+id/detail_number"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_width="236dp"
+        android:layout_height="70dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
-        android:text="TextView"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="7010065028"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColorLink="@android:color/holo_blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.23"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/detail_number"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/chat" />
 </android.support.constraint.ConstraintLayout>
