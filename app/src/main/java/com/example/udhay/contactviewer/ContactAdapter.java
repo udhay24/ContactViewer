@@ -1,13 +1,16 @@
 package com.example.udhay.contactviewer;
 
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.example.udhay.contactviewer.contact_database.ContactsContract;
+
+/*This is the adapter class for the RecyclerView in the MainActivity
+* It loads the contact name and number in the Main Activity*/
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactViewHolder> {
 
@@ -28,8 +31,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.contactV
 
         try {
             if (contactCursor.moveToPosition(position)) {
-                holder.contactName.setText(contactCursor.getString((contactCursor.getColumnIndex(com.example.udhay.contactviewer.contact_database.ContactsContract.Contacts.COLUMN_NAME))));
-                holder.contactNumber.setText(contactCursor.getString((contactCursor.getColumnIndex(com.example.udhay.contactviewer.contact_database.ContactsContract.Contacts.DEFAULT_NUMBER))));
+
+                holder.contactName.setText(contactCursor.getString((contactCursor.getColumnIndex(ContactsContract.Contacts.COLUMN_NAME))));
+                holder.contactNumber.setText(contactCursor.getString((contactCursor.getColumnIndex(ContactsContract.Contacts.DEFAULT_NUMBER))));
 
             }
         }

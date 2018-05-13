@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".whatsAppDirect" />
-        <activity android:name=".DetailContactActivity"
+        <activity android:name=".Activities.whatsAppDirect" />
+        <activity android:name=".Activities.DetailContactActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -4,17 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailContactActivity">
+    tools:context=".Activities.DetailContactActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contact_numbers"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="368dp"
+        android:layout_height="191dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/UserIcon"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/UserIcon"
+        android:layout_width="201dp"
+        android:layout_height="192dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/contact" />
 </android.support.constraint.ConstraintLayout>

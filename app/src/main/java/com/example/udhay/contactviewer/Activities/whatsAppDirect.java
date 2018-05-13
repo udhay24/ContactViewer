@@ -1,4 +1,4 @@
-package com.example.udhay.contactviewer;
+package com.example.udhay.contactviewer.Activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.udhay.contactviewer.R;
 
 public class whatsAppDirect extends AppCompatActivity {
 
